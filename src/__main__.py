@@ -90,7 +90,7 @@ def init_debugpy() -> None:
             (WrappedArray, tupleResolver),
         )
 
-    except (ImportError, AttributeError):
+    except ImportError, AttributeError:
         pass
 
 
@@ -99,10 +99,10 @@ def init_ipykernel() -> None:
     try:
         import ipykernel.embed  # pyright: ignore[reportMissingImports]  # noqa: PLC0415
         from ipykernel.kernelapp import (  # pyright: ignore[reportMissingImports]  # noqa: PLC0415
-            IPKernelApp,
+            IPKernelApp,  # pyright: ignore[reportUnknownVariableType]
         )
 
-        # Initalizing ipykernel doesn't seem to work on the main thread, something in getting the
+        # Initializing ipykernel doesn't seem to work on the main thread, something in getting the
         # calling module's frame goes wrong - so use a child thread. I think we'd need one anyway,
         # since I think it'd enter a blocking loop afterwards.
         # During init it tries to install a custom signal handler to ignore SIGINT, which can only
@@ -112,10 +112,10 @@ def init_ipykernel() -> None:
 
         # Both pyunrealsdk and ipkernel try to redirect stdout/err. Patch it to redirect to both.
         unreal_stdout, unreal_stderr = sys.stdout, sys.stderr
-        original_init_io = IPKernelApp.init_io
+        original_init_io = IPKernelApp.init_io  # type: ignore
 
-        @wraps(original_init_io)
-        def init_io(self: IPKernelApp) -> None:
+        @wraps(original_init_io)  # type: ignore
+        def init_io(self: IPKernelApp) -> None:  # type: ignore
             original_init_io(self)
 
             def make_double_wrapper[**P, R](
@@ -140,8 +140,8 @@ def init_ipykernel() -> None:
         # redirect. Patch it in.
         original_log_connection_info = IPKernelApp.log_connection_info  # type: ignore
 
-        @wraps(original_log_connection_info)
-        def log_connection_info(self: IPKernelApp) -> None:
+        @wraps(original_log_connection_info)  # type: ignore
+        def log_connection_info(self: IPKernelApp) -> None:  # type: ignore
             logging.info("Started ipykernel server")
 
             original_info = self.log.info  # type: ignore

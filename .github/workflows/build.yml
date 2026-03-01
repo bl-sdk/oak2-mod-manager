@@ -39,6 +39,8 @@ jobs:
 
     - name: Setup Python
       uses: actions/setup-python@v5
+      with:
+        python-version: ">=3.13"
 
     - name: Checkout repository and submodules
       uses: actions/checkout@v4
@@ -132,6 +134,8 @@ jobs:
 
     - name: Setup Python
       uses: actions/setup-python@v5
+      with:
+        python-version: ">=3.13"
 
     # Needed pyyaml for clang tidy to enable `-export-fixes`
     - name: Install pip packages
@@ -205,9 +209,9 @@ jobs:
         submodules: recursive
 
     - name: Run pyright
-      uses: jakebailey/pyright-action@v2
+      uses: jakebailey/pyright-action@v3
       with:
-        working-directory: ./src
+        extra-args: ./src
 
   ruff:
     runs-on: ubuntu-latest
@@ -215,17 +219,19 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Run Ruff Linting
-      uses: chartboost/ruff-action@v1
+      uses: astral-sh/ruff-action@v3
       with:
-        src: ./src
+        src: src
 
     - name: Run Ruff Formatting
-      uses: chartboost/ruff-action@v1
+      uses: astral-sh/ruff-action@v3
       with:
-        src: ./src
-        args: format --check
+        args: format --check --diff
+        src: src
 
   stubs:
     runs-on: ubuntu-latest
@@ -238,6 +244,8 @@ jobs:
 
     - name: Setup Python
       uses: actions/setup-python@v5
+      with:
+        python-version: ">=3.13"
 
     - name: Install pip packages
       run: pip install -r libs/pyunrealsdk/stubgen/requirements.txt
@@ -247,7 +255,7 @@ jobs:
       run: python -m stubgen OAK2 ../../expected_stubs
 
     - name: Make sure stubs are up to date
-      run: diff -r -q stubs expected_stubs
+      run: diff -r -s stubs expected_stubs
 
 # ==============================================================================
 

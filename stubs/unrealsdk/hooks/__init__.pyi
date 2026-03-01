@@ -66,6 +66,13 @@ def add_hook(
     identifier: str,
     callback: _PostHookCallback,
 ) -> bool: ...
+@overload
+def add_hook(
+    func: str,
+    type: Type,
+    identifier: str,
+    callback: _PreHookCallback | _PostHookCallback,
+) -> bool: ...
 def add_hook(
     func: str,
     type: Type,

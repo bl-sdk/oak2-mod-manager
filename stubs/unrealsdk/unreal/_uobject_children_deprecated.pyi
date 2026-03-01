@@ -1,3 +1,4 @@
+# pyright: reportDeprecated=false
 import warnings
 
 from ._uobject_children import (

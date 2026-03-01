@@ -131,8 +131,6 @@ bool handle_key_event(UGbxEnhancedPlayerInput* self, FInputKeyParams* params) {
     pyunrealsdk::debug_this_thread();
 
     for (const auto& bind : matching_binds) {
-        py::object ret;
-
         if (!bind.second.event.has_value()) {
             if (!event_as_enum) {
                 event_as_enum = input_event_enum(input_event);
