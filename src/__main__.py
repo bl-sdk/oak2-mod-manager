@@ -164,9 +164,13 @@ def init_ipykernel() -> None:
         # Suppress a couple warnings it throws
         warnings.filterwarnings(action="ignore", category=Warning, module="ipykernel")
 
+        # Create a module and namespace for the code to run in: by default the kernel will attach
+        # to the caller, which leads to the `%reset` magic deleting a fair bit of the SDK...
+        import _ipython_user
         # Finally, actually start the kernel
         Thread(
             target=ipykernel.embed.embed_kernel,  # type: ignore
+            kwargs=dict(module=_ipython_user, user_ns=_ipython_user.__dict__),
             name="ipykernel",
             daemon=True,
         ).start()
