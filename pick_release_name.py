@@ -253,7 +253,9 @@ UNIQUE_ITEM_NAMES = [
     "Zipper",
 ]
 
-PREVIOUS_RELEASE_NAMES = []
+PREVIOUS_RELEASE_NAMES = [
+    "Sprezzatura",
+]
 
 
 @cache
