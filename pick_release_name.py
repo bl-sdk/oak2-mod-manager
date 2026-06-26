@@ -307,6 +307,7 @@ UNIQUE_ITEM_NAMES = [
 PREVIOUS_RELEASE_NAMES = [
     "Sprezzatura",
     "Valuepalooza",
+    "Whiskey Foxtrot",
 ]
 
 

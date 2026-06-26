@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.3 (Upcoming)
+## v0.3: Whiskey Foxtrot
 - Upgraded to Python 3.14.
 
 ### [Mods Base v1.12](https://github.com/bl-sdk/mods_base/blob/master/Readme.md#v112)
